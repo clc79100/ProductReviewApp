@@ -1,0 +1,20 @@
+package com.example.productreviewapp.ui.screens
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.navigation.NavController
+
+@Composable
+fun VersusScreen(
+    paddingValues: PaddingValues,
+    navController: NavController
+){
+    Box(
+        contentAlignment = Alignment.Center
+    ){
+        Text("VersusScreen")
+    }
+}

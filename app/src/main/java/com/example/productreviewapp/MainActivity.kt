@@ -9,8 +9,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.productreviewapp.ui.components.CustomNavigationBar
+import com.example.productreviewapp.ui.screens.AccountScreen
+import com.example.productreviewapp.ui.screens.AccountScreenRoute
+import com.example.productreviewapp.ui.screens.HomeScreen
+import com.example.productreviewapp.ui.screens.HomeScreenRoute
+import com.example.productreviewapp.ui.screens.VersusScreen
+import com.example.productreviewapp.ui.screens.VersusScreenRoute
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +31,38 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProductReviewAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                            CustomNavigationBar(navController = navController)
+                    }
+                ){ innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = HomeScreenRoute
+                    ){
+                        composable<HomeScreenRoute>{
+                            HomeScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable<VersusScreenRoute>{
+                            VersusScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable <AccountScreenRoute>{
+                            AccountScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+                    }
                 }
             }
         }
