@@ -1,4 +1,4 @@
-package com.example.productreviewapp.ui.screens.HomeScreen
+package com.example.productreviewapp.ui.screens.homeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavOptionsBuilder
-import androidx.navigation.PopUpToBuilder
 import androidx.navigation.compose.rememberNavController
 import com.example.productreviewapp.domain.utils.SharedPref
 import com.example.productreviewapp.ui.components.CustomLoading
@@ -33,7 +31,6 @@ import com.example.productreviewapp.ui.screens.HomeScreenRoute
 import com.example.productreviewapp.ui.screens.LoginScreenRoute
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 import com.example.productreviewapp.ui.viewmodels.HomeViewModel
-import kotlin.text.clear
 
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

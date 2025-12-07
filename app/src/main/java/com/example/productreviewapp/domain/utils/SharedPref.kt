@@ -42,4 +42,10 @@ object SharedPref {
             putString("userId", value)
         }
     }
+
+    fun clear() {
+        preferences.edit {
+            clear()
+        }
+    }
 }
