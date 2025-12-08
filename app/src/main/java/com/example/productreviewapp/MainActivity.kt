@@ -20,8 +20,10 @@ import com.example.productreviewapp.ui.screens.AccountScreen
 import com.example.productreviewapp.ui.screens.AccountScreenRoute
 import com.example.productreviewapp.ui.screens.homeScreen.HomeScreen
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
+import com.example.productreviewapp.ui.screens.ReviewScreenRoute
 import com.example.productreviewapp.ui.screens.VersusScreen
 import com.example.productreviewapp.ui.screens.VersusScreenRoute
+import com.example.productreviewapp.ui.screens.reviewScreen.ReviewScreen
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -67,6 +69,13 @@ class MainActivity : ComponentActivity() {
 
                         composable <AccountScreenRoute>{
                             AccountScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable <ReviewScreenRoute>{
+                            ReviewScreen(
                                 paddingValues = innerPadding,
                                 navController = navController
                             )
