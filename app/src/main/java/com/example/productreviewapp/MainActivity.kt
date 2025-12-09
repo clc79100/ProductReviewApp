@@ -21,10 +21,14 @@ import com.example.productreviewapp.ui.screens.AccountScreenRoute
 import com.example.productreviewapp.ui.screens.EditAccountScreenRoute
 import com.example.productreviewapp.ui.screens.homeScreen.HomeScreen
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
+import com.example.productreviewapp.ui.screens.LoginScreenRoute
+import com.example.productreviewapp.ui.screens.RegisterScreenRoute
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
 import com.example.productreviewapp.ui.screens.SelectProductScreenRoute
 import com.example.productreviewapp.ui.screens.VersusScreenRoute
 import com.example.productreviewapp.ui.screens.accountScreen.EditAccountScreen
+import com.example.productreviewapp.ui.screens.auth.LoginScreen
+import com.example.productreviewapp.ui.screens.auth.RegisterScreen
 import com.example.productreviewapp.ui.screens.reviewScreen.ReviewScreen
 import com.example.productreviewapp.ui.screens.versusScreen.SelectProductScreen
 import com.example.productreviewapp.ui.screens.versusScreen.VersusScreen
@@ -57,6 +61,20 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = HomeScreenRoute
                     ){
+
+                        composable <LoginScreenRoute>{
+                            LoginScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable <RegisterScreenRoute>{
+                            RegisterScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
                         composable<HomeScreenRoute>{
                             HomeScreen(
                                 paddingValues = innerPadding,
