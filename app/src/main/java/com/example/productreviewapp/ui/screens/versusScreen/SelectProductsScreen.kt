@@ -1,4 +1,4 @@
-package com.example.productreviewapp.ui.screens
+package com.example.productreviewapp.ui.screens.versusScreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
