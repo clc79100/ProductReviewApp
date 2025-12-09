@@ -28,6 +28,11 @@ import com.example.productreviewapp.ui.components.CustomLoading
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
 import com.example.productreviewapp.ui.screens.LoginScreenRoute
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
+import com.example.productreviewapp.ui.screens.homeScreen.components.ButtonLogout
+import com.example.productreviewapp.ui.screens.homeScreen.components.ReviewCardVertical
+import com.example.productreviewapp.ui.screens.homeScreen.components.RowReviews
+import com.example.productreviewapp.ui.screens.homeScreen.components.Search
+import com.example.productreviewapp.ui.screens.homeScreen.components.SectionTitle
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 import com.example.productreviewapp.ui.viewmodels.HomeViewModel
 
@@ -44,180 +49,52 @@ fun HomeScreen(
             .background(Color(0xFFF5F6FA))
             .padding(paddingValues)
     ) {
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
+            item {
+                //TODO: ESTO SE QUITA PORQUE VA NOMAS EN EL ACCOUNT
+                ButtonLogout(navController)
+            }
 
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                ) {
-                    Button(
-                        onClick = {
-                            SharedPref.clear()
-                            navController.navigate(LoginScreenRoute) {
-                                popUpTo(HomeScreenRoute) { inclusive = true }
-                            }
-                        },
-                        shape = RoundedCornerShape(16.dp)
-                    ) {
-                        Text("Cerrar Sesión")
+                Search()
+            }
+
+            item {
+                RowReviews(
+                    "Por categoría IEM",
+                    vm.reviewsByCategory,
+                    navController
+                )
+            }
+
+            item {
+                RowReviews(
+                    "Hechas por Reviewer 2",
+                    vm.reviewsByReviewer,
+                    navController
+                )
+            }
+
+            item {
+                SectionTitle("Todas las Reviews")
+            }
+            items(vm.mainReviews) { review ->
+                ReviewCardVertical(
+                    title = review.title,
+                    imageUrl = review.product.image,
+                    price = review.product.price,
+                    onClick = {
+                        navController.navigate(ReviewScreenRoute(review.id))
                     }
-                }
-            }
-
-            item {
-                SearchSection()
-            }
-
-            if (vm.reviewsByCategory.isNotEmpty()) {
-                item { SectionTitle("Por categoría IEM") }
-                item { HorizontalCarousel(vm.reviewsByCategory, navController) }
-            }
-
-            if (vm.reviewsByReviewer.isNotEmpty()) {
-                item { SectionTitle("Hechas por Reviewer 2") }
-                item { HorizontalCarousel(vm.reviewsByReviewer, navController) }
-            }
-
-            if (vm.mainReviews.isNotEmpty()) {
-                item { SectionTitle("Todas las Reviews") }
-
-                items(vm.mainReviews) { review ->
-                    ReviewCardVertical(
-                        title = review.title,
-                        imageUrl = review.product.image,
-                        price = review.product.price,
-                        onClick = { navController.navigate(ReviewScreenRoute(review.id)) }
-                    )
-                }
+                )
             }
         }
 
         if (vm.loading) {
             CustomLoading()
-        }
-    }
-}
-
-@Composable
-fun SearchSection() {
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth()
-    ) {
-
-        TextField(
-            value = "",
-            onValueChange = {},
-            placeholder = { Text("Buscar reviews…") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(55.dp)
-                .clip(RoundedCornerShape(25.dp)),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent
-            ),
-            singleLine = true
-        )
-    }
-}
-
-@Composable
-fun SectionTitle(title: String) {
-    Text(
-        text = title,
-        fontSize = 26.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
-    )
-}
-
-@Composable
-fun HorizontalCarousel(
-    reviews: List<Review>,
-    navController: NavController
-) {
-    Row(
-        modifier = Modifier
-            .horizontalScroll(rememberScrollState())
-            .padding(start = 20.dp, bottom = 12.dp)
-    ) {
-        reviews.forEach { review ->
-            ReviewCardHorizontal(
-                title = review.title,
-                imageUrl = review.product.image,
-                price = review.product.price,
-                onClick = { navController.navigate(ReviewScreenRoute(review.id)) }
-            )
-            Spacer(modifier = Modifier.width(14.dp))
-        }
-    }
-}
-
-@Composable
-fun ReviewCardHorizontal(title: String, imageUrl: String, price: Int, onClick: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .width(220.dp)
-            .shadow(8.dp, RoundedCornerShape(24.dp))
-            .clip(RoundedCornerShape(24.dp))
-            .background(Color.White)
-            .clickable { onClick() }
-    ) {
-
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = title,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(130.dp)
-                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-        )
-
-        Column(modifier = Modifier.padding(12.dp)) {
-            Text(title, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text("Precio: $$price", fontSize = 13.sp)
-        }
-    }
-}
-
-@Composable
-fun ReviewCardVertical(title: String, imageUrl: String, price: Int, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 10.dp)
-            .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(25.dp))
-            .clip(RoundedCornerShape(25.dp))
-            .background(Color.White)
-            .clickable { onClick() }
-    ) {
-
-        Column {
-
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-                    .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
-            )
-
-            Column(modifier = Modifier.padding(15.dp)) {
-                Text(title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                Spacer(modifier = Modifier.height(6.dp))
-                Text("Precio: $$price", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
-            }
         }
     }
 }
