@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import com.example.productreviewapp.ui.icons.Draw_abstract
 import com.example.productreviewapp.ui.screens.AccountScreenRoute
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
-import com.example.productreviewapp.ui.screens.VersusScreenRoute
+import com.example.productreviewapp.ui.screens.SelectProductScreenRoute
 
 @Composable
 fun CustomNavigationBar(navController: NavController){
@@ -62,7 +62,7 @@ fun CustomNavigationBar(navController: NavController){
                 Text("Versus")
             },
             onClick = {
-                navController.navigate(VersusScreenRoute){
+                navController.navigate(SelectProductScreenRoute){
                     launchSingleTop = true
                     popUpTo(navController.graph.startDestinationId){
                         saveState = true

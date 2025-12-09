@@ -12,7 +12,10 @@ object RegisterScreenRoute
 object HomeScreenRoute
 
 @Serializable
-object VersusScreenRoute
+object SelectProductScreenRoute
+
+@Serializable
+data class VersusScreenRoute(val firstProductId: String, val secondProductId: String)
 
 @Serializable
 object AccountScreenRoute

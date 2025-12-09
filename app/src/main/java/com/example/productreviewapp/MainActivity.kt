@@ -22,10 +22,12 @@ import com.example.productreviewapp.ui.screens.EditAccountScreenRoute
 import com.example.productreviewapp.ui.screens.homeScreen.HomeScreen
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
-import com.example.productreviewapp.ui.screens.VersusScreen
+import com.example.productreviewapp.ui.screens.SelectProductScreenRoute
 import com.example.productreviewapp.ui.screens.VersusScreenRoute
 import com.example.productreviewapp.ui.screens.accountScreen.EditAccountScreen
 import com.example.productreviewapp.ui.screens.reviewScreen.ReviewScreen
+import com.example.productreviewapp.ui.screens.versusScreen.SelectProductScreen
+import com.example.productreviewapp.ui.screens.versusScreen.VersusScreen
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 val currentDestination = navBackStackEntry?.destination?.route
                 val bottomBarDestinations = listOf(
                     HomeScreenRoute::class.qualifiedName,
-                    VersusScreenRoute::class.qualifiedName,
+                    SelectProductScreenRoute::class.qualifiedName,
                     AccountScreenRoute::class.qualifiedName
                 )
                 Scaffold(
@@ -62,7 +64,14 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable<VersusScreenRoute>{
+                        composable<SelectProductScreenRoute>{
+                            SelectProductScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable <VersusScreenRoute>{
                             VersusScreen(
                                 paddingValues = innerPadding,
                                 navController = navController
