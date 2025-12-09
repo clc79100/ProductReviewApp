@@ -1,21 +1,16 @@
 package com.example.productreviewapp.ui.screens.homeScreen.components
 
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.productreviewapp.domain.models.Review
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
-import kotlin.collections.forEach
 
 @Composable
 fun RowReviews(
@@ -25,7 +20,26 @@ fun RowReviews(
 ) {
     SectionTitle(title)
 
-    Row( // TODO: PASAR A LAZYROW
+    LazyRow(
+        modifier = Modifier
+            .padding(bottom = 12.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp)
+
+    ) {
+        items(reviews) { review ->
+            ReviewCardHorizontal(
+                title = review.title,
+                imageUrl = review.product.image,
+                price = review.product.price,
+                onClick = {
+                    navController.navigate(ReviewScreenRoute(review.id))
+                }
+            )
+            //Spacer(modifier = Modifier.width(14.dp))
+        }
+    }
+    /*Row(
         modifier = Modifier
             .horizontalScroll(rememberScrollState())
             .padding(start = 20.dp, bottom = 12.dp)
@@ -41,5 +55,5 @@ fun RowReviews(
             )
             Spacer(modifier = Modifier.width(14.dp))
         }
-    }
+    }*/
 }
