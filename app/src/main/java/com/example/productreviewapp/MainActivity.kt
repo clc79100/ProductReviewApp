@@ -16,13 +16,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.productreviewapp.ui.components.CustomNavigationBar
-import com.example.productreviewapp.ui.screens.AccountScreen
+import com.example.productreviewapp.ui.screens.accountScreen.AccountScreen
 import com.example.productreviewapp.ui.screens.AccountScreenRoute
+import com.example.productreviewapp.ui.screens.EditAccountScreenRoute
 import com.example.productreviewapp.ui.screens.homeScreen.HomeScreen
 import com.example.productreviewapp.ui.screens.HomeScreenRoute
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
 import com.example.productreviewapp.ui.screens.VersusScreen
 import com.example.productreviewapp.ui.screens.VersusScreenRoute
+import com.example.productreviewapp.ui.screens.accountScreen.EditAccountScreen
 import com.example.productreviewapp.ui.screens.reviewScreen.ReviewScreen
 import com.example.productreviewapp.ui.theme.ProductReviewAppTheme
 
@@ -69,6 +71,13 @@ class MainActivity : ComponentActivity() {
 
                         composable <AccountScreenRoute>{
                             AccountScreen(
+                                paddingValues = innerPadding,
+                                navController = navController
+                            )
+                        }
+
+                        composable <EditAccountScreenRoute>{
+                            EditAccountScreen(
                                 paddingValues = innerPadding,
                                 navController = navController
                             )

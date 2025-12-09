@@ -18,4 +18,7 @@ object VersusScreenRoute
 object AccountScreenRoute
 
 @Serializable
+object EditAccountScreenRoute
+
+@Serializable
 data class ReviewScreenRoute(val reviewId: String)

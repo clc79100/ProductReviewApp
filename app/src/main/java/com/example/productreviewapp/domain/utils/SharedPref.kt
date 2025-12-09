@@ -3,6 +3,8 @@ package com.example.productreviewapp.domain.utils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.example.productreviewapp.domain.models.UserProfile
+import com.google.gson.Gson
 
 object SharedPref {
     private lateinit var preferences: SharedPreferences
@@ -41,6 +43,18 @@ object SharedPref {
         preferences.edit{
             putString("userId", value)
         }
+    }
+
+    fun setUserProfile(userProfile: UserProfile) {
+        val json = Gson().toJson(userProfile)
+        preferences.edit {
+            putString("userProfile", json)
+        }
+    }
+
+    fun getUserProfile(): UserProfile? {
+        val json = preferences.getString("userProfile", null) ?: return null
+        return Gson().fromJson(json, UserProfile::class.java)
     }
 
     fun clear() {
