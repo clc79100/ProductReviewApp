@@ -6,7 +6,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -50,13 +49,7 @@ fun EditAccountScreen(
             onValueChange = { vm.name = it },
             label = { Text("Nombre de Usuario") },
             modifier = Modifier.inputModifier(),
-            shape = RoundedCornerShape(16.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedIndicatorColor = Color(0xFF6C63FF),
-                unfocusedIndicatorColor = Color.LightGray
-            )
+            shape = RoundedCornerShape(16.dp)
         )
 
         OutlinedTextField(
@@ -70,15 +63,7 @@ fun EditAccountScreen(
         OutlinedTextField(
             value = vm.password,
             onValueChange = { vm.password = it },
-            label = { Text("Contraseña") },
-            modifier = Modifier.inputModifier(),
-            shape = RoundedCornerShape(16.dp)
-        )
-
-        OutlinedTextField(
-            value = vm.profilePhoto,
-            onValueChange = { vm.profilePhoto = it },
-            label = { Text("URL Foto de Perfil") },
+            label = { Text("Nueva Contraseña") },
             modifier = Modifier.inputModifier(),
             shape = RoundedCornerShape(16.dp)
         )

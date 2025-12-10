@@ -1,6 +1,7 @@
 package com.example.productreviewapp.ui.screens.accountScreen.componets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +17,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 @Composable
 fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
     Box(
-        modifier = Modifier.size(160.dp),
+        modifier = Modifier
+            .size(160.dp)
+            .border(
+                color = Color(0xFF6C63FF),
+                width = 3.dp,
+                shape = CircleShape
+            )
+            .padding(6.dp),
         contentAlignment = Alignment.BottomEnd
     ) {
 
@@ -39,7 +48,8 @@ fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(CircleShape)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
 
         Icon(

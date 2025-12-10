@@ -44,6 +44,14 @@ object SharedPref {
             putString("userId", value)
         }
     }
+    fun getUserEmail(): String?{
+        return preferences.getString("userEmail", null)
+    }
+    fun setUserEmail(value: String){
+        preferences.edit {
+            putString("userEmail", value)
+        }
+    }
 
     fun setUserProfile(userProfile: UserProfile) {
         val json = Gson().toJson(userProfile)

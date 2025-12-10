@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.productreviewapp.data.RetrofitClient
+import com.example.productreviewapp.domain.dtos.PhotoProfile
 import com.example.productreviewapp.domain.dtos.UserDTO
 import com.example.productreviewapp.domain.models.UserProfile
 import com.example.productreviewapp.domain.utils.SharedPref
@@ -32,7 +33,7 @@ class UserViewModel: ViewModel() {
     var isAccountDeleted by mutableStateOf(false)
     var userProfile by mutableStateOf(SharedPref.getUserProfile())
     var name by mutableStateOf(userProfile?.name ?: "")
-    var email by mutableStateOf(userProfile?.email ?: "")
+    var email by mutableStateOf(SharedPref.getUserEmail() ?: "")
     var password by mutableStateOf("")
     var profilePhoto by mutableStateOf(userProfile?.profilePhoto ?: "")
 
@@ -43,8 +44,9 @@ class UserViewModel: ViewModel() {
         viewModelScope.launch {
             loading = true
             try {
-                userProfile = service.getUser(userId)
-                SharedPref.setUserProfile(userProfile ?: UserProfile(id = userId,name = "", email = "", profilePhoto = ""))
+                val result = service.getUser(userId)
+                userProfile = UserProfile(userId, result.name, email, result.profilePhoto)
+                SharedPref.setUserProfile(userProfile!!)
             }
             catch (e: Exception){
                 Log.e("AccountScreen: loading user", e.toString())
@@ -59,19 +61,41 @@ class UserViewModel: ViewModel() {
         viewModelScope.launch {
             loading = true
             try {
-                service.updateUser(
+                val result = service.updateUser(
                     auth = auth,
                     id = userId,
                     userDTO = UserDTO(
                         name = name,
                         email = email,
-                        password = password,
-                        profilePhoto = profilePhoto
+                        password = password.ifEmpty { null },
                     )
                 )
+                userProfile = result
+                SharedPref.setUserEmail(email)
+                SharedPref.setUserProfile(result)
             }
             catch (e: Exception){
                 Log.e("EditAccountScreen", e.toString())
+            }
+        }
+    }
+
+    fun updateProfilePhoto(){
+        viewModelScope.launch {
+            loading = true
+            try {
+               val result = service.updatePhotoProfile(
+                    auth = auth,
+                    id = userId,
+                    photoProfile = PhotoProfile(profilePhoto)
+                )
+                SharedPref.setUserEmail(result.email)
+                SharedPref.setUserProfile(result)
+
+            }catch (e: Exception){
+                Log.e("UpdatePhoto", e.toString())
+            } finally {
+                loading = false
             }
         }
     }

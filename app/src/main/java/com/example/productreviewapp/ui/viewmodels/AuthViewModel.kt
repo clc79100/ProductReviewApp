@@ -22,7 +22,6 @@ class AuthViewModel: ViewModel(){
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     var confirmPassword by mutableStateOf("")
-    var profilePhoto by mutableStateOf("")
 
     var loading by mutableStateOf(false)
 
@@ -39,6 +38,7 @@ class AuthViewModel: ViewModel(){
                 val result = service.login(login)
                 SharedPref.setToken(result.token)
                 SharedPref.setUserId(result.user.id)
+                SharedPref.setUserEmail(result.user.email)
                 SharedPref.setIsLogged(true)
                 isLogged = true
             }catch (e: Exception){
@@ -60,7 +60,6 @@ class AuthViewModel: ViewModel(){
                     name = name,
                     email = email,
                     password = password,
-                    profilePhoto = profilePhoto.ifBlank { null }
                 )
                 service.register(user)
             }catch (e: Exception){

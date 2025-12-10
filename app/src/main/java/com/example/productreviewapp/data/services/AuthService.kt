@@ -2,6 +2,7 @@ package com.example.productreviewapp.data.services
 
 import com.example.productreviewapp.domain.dtos.AuthResponse
 import com.example.productreviewapp.domain.dtos.Login
+import com.example.productreviewapp.domain.dtos.PhotoProfile
 import com.example.productreviewapp.domain.dtos.UserDTO
 import com.example.productreviewapp.domain.models.UserProfile
 import retrofit2.Response
@@ -31,7 +32,14 @@ interface AuthService {
         @Header ("Authorization") auth: String,
         @Path("id") id: String,
         @Body userDTO: UserDTO
-    ): Response<Unit>
+    ): UserProfile
+
+    @PUT("users/{id}")
+    suspend fun updatePhotoProfile(
+        @Header ("Authorization") auth: String,
+        @Path("id") id: String,
+        @Body photoProfile: PhotoProfile
+    ): UserProfile
 
     @DELETE("users/{id}")
     suspend fun deleteUser(
