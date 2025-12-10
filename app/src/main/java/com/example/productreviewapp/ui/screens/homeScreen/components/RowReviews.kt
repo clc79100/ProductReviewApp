@@ -32,6 +32,7 @@ fun RowReviews(
                 title = review.title,
                 imageUrl = review.product.image,
                 price = review.product.price,
+                reviewer = review.reviewer,
                 onClick = {
                     navController.navigate(ReviewScreenRoute(review.id))
                 }

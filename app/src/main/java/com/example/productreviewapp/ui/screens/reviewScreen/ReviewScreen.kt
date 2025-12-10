@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -100,7 +101,8 @@ fun ReviewScreen(
                 Text(
                     text = vm.review?.title ?: "Sin título",
                     fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
                 Text(
                     text = "Review por ${vm.review?.reviewer?.name ?: "Sin nombre"}",
@@ -164,7 +166,8 @@ fun ReviewScreen(
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = recentComment?.content ?:" No Hay comentarios",
+                text = (recentComment?.user?.name + ": " + recentComment?.content) ?:" No Hay comentarios",
+                color = Color.Gray,
                 minLines = 2,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
