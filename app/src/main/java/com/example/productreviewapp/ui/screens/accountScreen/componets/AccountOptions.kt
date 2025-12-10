@@ -38,7 +38,6 @@ fun AccountOption(optionText: String, value: String, onclick: () -> Unit) {
                 contentDescription = null
             )
         }
-
         HorizontalDivider(modifier = Modifier.padding(start = 14.dp))
     }
 }

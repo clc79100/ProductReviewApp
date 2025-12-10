@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.productreviewapp.ui.components.CustomLoading
 import com.example.productreviewapp.ui.screens.ReviewScreenRoute
-import com.example.productreviewapp.ui.screens.homeScreen.components.ButtonLogout
 import com.example.productreviewapp.ui.screens.homeScreen.components.ReviewCardVertical
 import com.example.productreviewapp.ui.screens.homeScreen.components.RowReviews
 import com.example.productreviewapp.ui.screens.homeScreen.components.Search
@@ -36,11 +35,6 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 40.dp)
         ) {
-            /*item {
-                //TODO: ESTO SE QUITA PORQUE VA NOMAS EN EL ACCOUNT
-                ButtonLogout(navController)
-            }*/
-
             item {
                 Search()
             }

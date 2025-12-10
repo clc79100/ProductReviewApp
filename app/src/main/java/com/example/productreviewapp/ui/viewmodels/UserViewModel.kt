@@ -16,14 +16,28 @@ class UserViewModel: ViewModel() {
     val service = RetrofitClient.createAuthService()
     val userId = SharedPref.getUserId()!!
     val auth: String = "Bearer ${SharedPref.getToken()}"
-    var isLogged by mutableStateOf(SharedPref.getIsLogged())
+    val imageList = listOf(
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765338923/lain_ildzp4.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339078/joel2_rsyptw.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339224/joel_jdmzeo.webp",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339218/espalda_sj1mxt.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339504/fortfazo_iwimm1.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339662/cpaudioorigins_eilrgu.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765338988/Gemini_Generated_Image_47wk1r47wk1r47wk_xjw3rs.png",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765338967/esdee_ctrlo_bk1k3g.jpg",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765339101/Gemini_Generated_Image_qjhkl8qjhkl8qjhk_tlslem.png",
+        "https://res.cloudinary.com/ddfg5b0z1/image/upload/v1765338938/esdee_alfred_yibizw.jpg"
+    )
+
     var isAccountDeleted by mutableStateOf(false)
-    var userProfile by mutableStateOf<UserProfile?>(SharedPref.getUserProfile())
-    var loading by mutableStateOf(false)
+    var userProfile by mutableStateOf(SharedPref.getUserProfile())
     var name by mutableStateOf(userProfile?.name ?: "")
     var email by mutableStateOf(userProfile?.email ?: "")
     var password by mutableStateOf("")
     var profilePhoto by mutableStateOf(userProfile?.profilePhoto ?: "")
+
+    var loading by mutableStateOf(false)
+    var showSheet by mutableStateOf(false)
 
     fun loadUser(){
         viewModelScope.launch {

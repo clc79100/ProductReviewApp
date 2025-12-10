@@ -1,13 +1,11 @@
 package com.example.productreviewapp.ui.screens.accountScreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,23 +13,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.productreviewapp.domain.utils.SharedPref
 import com.example.productreviewapp.ui.components.CustomLoading
 import com.example.productreviewapp.ui.screens.AccountScreenRoute
 import com.example.productreviewapp.ui.screens.EditAccountScreenRoute
+import com.example.productreviewapp.ui.screens.HomeScreenRoute
 import com.example.productreviewapp.ui.screens.LoginScreenRoute
+import com.example.productreviewapp.ui.screens.accountScreen.componets.AccountButton
+import com.example.productreviewapp.ui.screens.accountScreen.componets.PhotoProfile
 import com.example.productreviewapp.ui.viewmodels.UserViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(
     paddingValues: PaddingValues,
     navController: NavController
 ) {
     val vm: UserViewModel = viewModel()
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false
+    )
 
     LaunchedEffect(Unit) { vm.loadUser() }
 
@@ -50,38 +58,8 @@ fun AccountScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Box(
-            modifier = Modifier.size(160.dp),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            if (!vm.userProfile?.profilePhoto.isNullOrEmpty()) {
-                AsyncImage(
-                    model = vm.userProfile?.profilePhoto,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Default.AccountCircle,
-                    contentDescription = null,
-                    tint = Color.Gray,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-
-            Icon(
-                imageVector = Icons.Default.Edit,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(Color(0xFF6C63FF))
-                    .padding(10.dp)
-                    .clickable { navController.navigate(EditAccountScreenRoute) }
-            )
+        PhotoProfile(vm.userProfile?.profilePhoto){
+            vm.showSheet = true
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -105,27 +83,62 @@ fun AccountScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        AccountButton(
+            text = "Modificar Cuenta",
+            color = Color(0xFF6C63FF),
+            onClick = {navController.navigate(EditAccountScreenRoute)}
+        )
 
-        Button(
-            onClick = { navController.navigate(EditAccountScreenRoute) },
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
-            modifier = Modifier.fillMaxWidth()
+        AccountButton(
+            text = "Cerrar Sesión",
+            color = Color.Gray,
+            onClick = {
+                SharedPref.clear()
+                navController.navigate(LoginScreenRoute) {
+                    popUpTo(HomeScreenRoute) { inclusive = true }
+                }
+            }
+        )
+
+        AccountButton(
+            text = "Eliminar Cuenta",
+            color = Color.Red.copy(alpha = 0.8f),
+            onClick = {navController.navigate(EditAccountScreenRoute)}
+        )
+    }
+
+    if (vm.showSheet){
+        ModalBottomSheet(
+            onDismissRequest = {vm.showSheet = false},
+            dragHandle = { BottomSheetDefaults.DragHandle() },
+            sheetState = sheetState
         ) {
-            Text("Modificar Cuenta", color = Color.White)
-        }
+            Column(Modifier.padding(horizontal = 12.dp)){
+                Text(
+                    text = "Elige una Foto de Perfil",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(vm.imageList){ image ->
+                        AsyncImage(
+                            model = image,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                        )
+                    }
+                }
+            }
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // BOTÓN BORRAR
-        Button(
-            onClick = { vm.deleteAccount() },
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.8f)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Borrar Cuenta", color = Color.White)
         }
     }
 
