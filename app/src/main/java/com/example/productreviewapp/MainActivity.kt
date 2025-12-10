@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                 ){ innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = HomeScreenRoute
+                        startDestination = LoginScreenRoute
                     ){
 
                         composable <LoginScreenRoute>{

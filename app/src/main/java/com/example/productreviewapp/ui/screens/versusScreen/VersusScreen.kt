@@ -15,15 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,6 +30,7 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.productreviewapp.domain.models.Product
 import com.example.productreviewapp.ui.components.CustomLoading
+import com.example.productreviewapp.ui.screens.versusScreen.versusComponents.VersusBar
 import com.example.productreviewapp.ui.viewmodels.VersusViewModel
 
 @Composable
@@ -113,7 +111,7 @@ fun VersusScreen(
 
             if (vm.firstProduct != null && vm.secondProduct != null) {
 
-                SpecsComparison(
+                VersusSpecs(
                     product1 = vm.firstProduct!!,
                     product2 = vm.secondProduct!!
                 )
@@ -127,7 +125,7 @@ fun VersusScreen(
 }
 
 @Composable
-fun SpecsComparison(
+fun VersusSpecs(
     product1: Product,
     product2: Product
 ) {
@@ -137,7 +135,6 @@ fun SpecsComparison(
     val allKeys = specs1.keys
 
     Column(modifier = Modifier.fillMaxWidth()) {
-
         allKeys.forEach { key ->
             val value1 = specs1[key]
             val value2 = specs2[key]
@@ -150,28 +147,26 @@ fun SpecsComparison(
             )
             Spacer(Modifier.height(8.dp))
 
-            val maxValue: Float? =
-                if (value1 is Number && value2 is Number)
-                    value1.toFloat() + value2.toFloat()
-                else null
+            if (value1 is Number && value2 is Number){
+                VersusBar(value1, value2)
+            } else{
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,) {
+                    SpecProductRow(
+                        value = value1,
+                        modifier = Modifier.weight(1f)
+                    )
 
+                    SpecProductRow(
+                        value = value2,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SpecProductRow(
-                    value = value1,
-                    maxValue = maxValue,
-                    modifier = Modifier.weight(1f)
-                )
-
-                SpecProductRow(
-                    value = value2,
-                    maxValue = maxValue,
-                    modifier = Modifier.weight(1f)
-                )
             }
+
+
         }
     }
 }
@@ -180,7 +175,6 @@ fun SpecsComparison(
 @Composable
 fun SpecProductRow(
     value: Any?,
-    maxValue: Float?,
     modifier: Modifier
 ) {
     Column (
@@ -192,28 +186,13 @@ fun SpecProductRow(
             horizontalArrangement = Arrangement.Center
         ) {
             if (value is Boolean){
-                Text(if (value) "Si" else "No")
+                Text(if (value) "Si✅" else "No❌")
             } else {
                 Text(value.toString())
             }
 
         }
-
-        if (value is Number && maxValue != null && maxValue > 0f) {
-
-            val progress = (value.toFloat() / maxValue).coerceIn(0f, 1f)
-
-            LinearProgressIndicator(
-                progress = { progress },
-                color = ProgressIndicatorDefaults.linearColor,
-                trackColor = ProgressIndicatorDefaults.linearTrackColor,
-                strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .graphicsLayer {
-                        scaleX = -1f
-                    }
-            )
-        }
     }
 }
+
+

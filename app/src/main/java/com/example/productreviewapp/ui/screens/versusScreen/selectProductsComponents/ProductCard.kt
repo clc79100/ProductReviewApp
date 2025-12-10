@@ -43,7 +43,7 @@ fun ProductCard(
             .background(Color.White)
             .background(Color.LightGray.copy(0.2f)),
     ) {
-        Column() {
+        Column{
             Spacer(Modifier.weight(10f))
             Spacer(
                 Modifier
