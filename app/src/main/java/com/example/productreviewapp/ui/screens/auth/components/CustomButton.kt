@@ -31,7 +31,7 @@ fun CustomButton(modifier: Modifier, onClick: () -> Unit){
                 .height(60.dp)
                 .clip(CircleShape)
                 .clickable{
-
+                    onClick()
                 }
                 .background(Brush.linearGradient(
                     colors = listOf(Color.White, BlueGradient[0]),
