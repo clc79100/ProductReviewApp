@@ -46,7 +46,12 @@ fun ReviewCardVertical( //TODO: Dejar en un solo card
         )
 
         Column(modifier = Modifier.padding(15.dp)) {
-            Text(title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                maxLines = 1
+            )
             Spacer(modifier = Modifier.height(6.dp))
             Text("Precio: $$price", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         }
@@ -79,7 +84,12 @@ fun ReviewCardHorizontal(
         )
 
         Column(modifier = Modifier.padding(12.dp)) {
-            Text(title, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                minLines = 2
+            )
             Text("Precio: $$price", fontSize = 13.sp)
         }
     }

@@ -1,7 +1,9 @@
 package com.example.productreviewapp.ui.screens.reviewScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,8 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -41,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
 import com.example.productreviewapp.ui.components.CustomLoading
 import com.example.productreviewapp.ui.screens.reviewScreen.components.CommentSection
 import com.example.productreviewapp.ui.theme.background
@@ -62,6 +68,7 @@ fun ReviewScreen(
 
     Column (
         modifier = Modifier
+            .background(Color.White)
             .padding(paddingValues)
             .fillMaxSize()
     ){
@@ -84,37 +91,69 @@ fun ReviewScreen(
                     tint = Color.DarkGray
                 )
             }
-            Box(
+            Column(
                 modifier = Modifier
                     .weight(1f),
-                contentAlignment = Alignment.Center
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = vm.review?.title ?: "Sin título",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )
+                Text(
+                    text = "Review por ${vm.review?.reviewer?.name ?: "Sin nombre"}",
+                    fontSize = 20.sp,
+                    color = Color.Gray
+                )
             }
         }
+        Box(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Color.LightGray)
+        )
         Column(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
+                .background(background)
                 .padding(all = 16.dp)
         ) {
+            AsyncImage(
+                model = vm.review?.product?.image ?: "",
+                contentDescription = vm.review?.product?.name ?: "Sin titulo",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(500.dp)
+                    .padding(10.dp)
+            )
+            Text(
+                text = "Precio: $${vm.review?.product?.price}",
+                fontSize = 15.sp,
+                color = Color.Gray
+            )
             MarkdownText(
                 vm.review?.content ?: "Sin contenido",
                 modifier = Modifier
                     .padding(bottom = 50.dp)
             )
         }
+        Box(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Color.LightGray)
+        )
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable{
+                /*.clickable {
                     vm.showSheet = true
-                }
+                }*/
                 .padding(all = 16.dp)
         ) {
             val recentComment =
@@ -135,6 +174,9 @@ fun ReviewScreen(
                         color = commentBackground,
                         shape = RoundedCornerShape(12.dp)
                     )
+                    .clickable {
+                        vm.showSheet = true
+                    }
                     .padding(12.dp)
             )
 
