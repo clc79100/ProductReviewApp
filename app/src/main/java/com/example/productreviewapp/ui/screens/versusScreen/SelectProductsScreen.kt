@@ -1,16 +1,12 @@
 package com.example.productreviewapp.ui.screens.versusScreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -30,8 +26,12 @@ import androidx.navigation.NavController
 import com.example.productreviewapp.domain.models.Product
 import com.example.productreviewapp.ui.components.CustomCircularLoading
 import com.example.productreviewapp.ui.screens.VersusScreenRoute
-import com.example.productreviewapp.ui.screens.versusScreen.components.ProductCard
-import com.example.productreviewapp.ui.screens.versusScreen.components.SelectProductButton
+import com.example.productreviewapp.ui.screens.versusScreen.selectProductsComponents.ProductCard
+import com.example.productreviewapp.ui.screens.versusScreen.selectProductsComponents.SelectProductButton
+import com.example.productreviewapp.ui.screens.versusScreen.selectProductsComponents.SelectProductCard
+import com.example.productreviewapp.ui.screens.versusScreen.selectProductsComponents.SelectProductSection
+import com.example.productreviewapp.ui.theme.BlueGradient
+import com.example.productreviewapp.ui.theme.RedGradient
 import com.example.productreviewapp.ui.viewmodels.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,12 +57,11 @@ fun SelectProductScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-
-
             IsProductSelected(
                 product = vm.firstProduct,
                 buttonText = "Selecciona un producto",
                 isEnabled = true,
+                gradientColors = BlueGradient,
                 modifier = Modifier.weight(1f),
                 onClickSelect = {
                     vm.isFirstButtonClicked = true
@@ -78,8 +77,9 @@ fun SelectProductScreen(
 
             IsProductSelected(
                 product = vm.secondProduct,
-                buttonText =  "Seleccione otro producto",
+                buttonText =  "Selecciona otro producto",
                 isEnabled = true,
+                gradientColors = RedGradient,
                 modifier = Modifier.weight(1f),
                 onClickSelect = {
                     vm.isSecondButtonClicked = true
@@ -111,49 +111,50 @@ fun SelectProductScreen(
 
     if(vm.showSheet){
         ModalBottomSheet(
-            onDismissRequest = { vm.showSheet = false },
+            onDismissRequest = {
+                vm.isSecondButtonClicked = false
+                vm.isFirstButtonClicked = false
+                vm.showSheet = false
+                               },
             dragHandle = { BottomSheetDefaults.DragHandle() },
             sheetState = sheetState
         ) {
-            Box {
+            vm.filterListOnNextProduct()
+            SelectProductSection(vm.products) { product ->
+                if(vm.isFirstButtonClicked){
+                    vm.firstProduct = product
+                    vm.isFirstButtonClicked = false
+                }
+
+                if (vm.isSecondButtonClicked){
+                    vm.secondProduct = product
+                    vm.isSecondButtonClicked = false
+                }
+
+                if (vm.firstProduct != null && vm.secondProduct != null) {
+                    vm.isEnabled = true
+                }
+                vm.actualCategory = product.category
+                vm.showSheet = false
+            }
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(vm.products) { product ->
-                        Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable{
-                                    if(vm.isFirstButtonClicked){
-                                        vm.firstProduct = product
-                                        vm.isFirstButtonClicked = false
-                                    }
+                        SelectProductCard(product) {
 
-                                    if (vm.isSecondButtonClicked){
-                                        vm.secondProduct = product
-                                        vm.isSecondButtonClicked = false
-                                    }
-
-                                    if (vm.firstProduct != null && vm.secondProduct != null) {
-                                        vm.isEnabled = true
-                                    }
-
-                                    vm.showSheet = false
-                                }
-                                .size(80.dp)
-                                .background(Color.Gray),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(product.name)
                         }
                     }
                 }
                 if (vm.loading){
                     CustomCircularLoading()
                 }
-            }
+
         }
     }
 }
@@ -164,12 +165,17 @@ fun IsProductSelected(
     product: Product?,
     buttonText: String,
     isEnabled: Boolean,
+    gradientColors: List<Color>,
     modifier: Modifier,
     onClickSelect: () -> Unit,
     onClickDelete: ()-> Unit
 ){
     if(product != null){
-        ProductCard(product, modifier) {
+        ProductCard(
+            product,
+            gradientColors,
+            modifier
+        ) {
             onClickDelete()
         }
     } else{

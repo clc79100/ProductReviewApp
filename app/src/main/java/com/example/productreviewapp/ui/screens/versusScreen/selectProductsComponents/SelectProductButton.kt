@@ -1,4 +1,4 @@
-package com.example.productreviewapp.ui.screens.versusScreen.components
+package com.example.productreviewapp.ui.screens.versusScreen.selectProductsComponents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,8 +23,8 @@ fun SelectProductButton(text: String, isEnabled: Boolean, modifier: Modifier, on
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(4.dp, shape = RoundedCornerShape(40.dp))
-            .clip(RoundedCornerShape(40.dp))
+            .shadow(4.dp, shape = RoundedCornerShape(15.dp))
+            .clip(RoundedCornerShape(15.dp))
             .clickable(
                 enabled = isEnabled,
                 onClick = {onClick()}

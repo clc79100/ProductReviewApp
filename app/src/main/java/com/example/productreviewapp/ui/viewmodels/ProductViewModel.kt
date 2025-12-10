@@ -19,6 +19,8 @@ class ProductViewModel: ViewModel() {
     var secondProduct by mutableStateOf<Product?>(null)
     var isFirstButtonClicked by mutableStateOf(false)
     var isSecondButtonClicked by mutableStateOf(false)
+
+    var actualCategory by mutableStateOf("")
     var isEnabled by mutableStateOf(false)
     var showSheet by mutableStateOf(false)
     var loading by mutableStateOf(false)
@@ -31,7 +33,6 @@ class ProductViewModel: ViewModel() {
                     service.getAllProducts()
                 }
                 products = result.await()
-                delay(1000)
             }
             catch (e: Exception){
                 Log.e("HomeScreen", e.toString())
@@ -39,6 +40,25 @@ class ProductViewModel: ViewModel() {
             finally {
                 loading = false
             }
+        }
+    }
+
+    fun filterListOnNextProduct(){
+        if (
+            (firstProduct != null || secondProduct != null)
+            && actualCategory != ""
+            ){
+            if ( firstProduct != null){
+                products = products
+                    .filterNot { it.id == firstProduct!!.id }
+                    .filterNot { it.category != actualCategory }
+                } else if (secondProduct != null){
+                products = products
+                    .filterNot { it.id == secondProduct!!.id }
+                    .filterNot { it.category != actualCategory }
+            }
+        } else {
+            actualCategory = ""
         }
     }
 }
