@@ -1,6 +1,7 @@
 package com.example.productreviewapp.ui.screens.accountScreen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,6 +54,17 @@ fun AccountScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            AccountButton(
+                text = "Eliminar Cuenta",
+                color = Color.Red.copy(alpha = 0.8f),
+                onClick = {vm.deleteAccount()}
+            )
+        }
         PhotoProfile(vm.profilePhoto){
             vm.showSheet = true
         }
@@ -85,7 +97,7 @@ fun AccountScreen(
             modifier = Modifier.padding(horizontal = 100.dp),
             onClick = {navController.navigate(EditAccountScreenRoute)}
         )
-        Text(
+        /*Text(
             text = "Otras Opciones",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
@@ -93,8 +105,9 @@ fun AccountScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 60.dp)
-        )
+        )*/
 
+        Spacer(modifier = Modifier.weight(1f))
         AccountButton(
             text = "Cerrar Sesión",
             color = Color.Gray,
@@ -106,11 +119,6 @@ fun AccountScreen(
             }
         )
 
-        AccountButton(
-            text = "Eliminar Cuenta",
-            color = Color.Red.copy(alpha = 0.8f),
-            onClick = {vm.deleteAccount()}
-        )
     }
 
     if (vm.showSheet){

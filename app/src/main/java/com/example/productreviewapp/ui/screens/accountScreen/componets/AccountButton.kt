@@ -18,7 +18,7 @@ fun AccountButton(text: String, modifier: Modifier = Modifier, onClick: () -> Un
         onClick = { onClick()},
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
             .padding(vertical = 10.dp)
     ) {
         Text(text)

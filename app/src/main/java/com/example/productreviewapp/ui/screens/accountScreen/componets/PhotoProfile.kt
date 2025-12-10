@@ -57,10 +57,10 @@ fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
             contentDescription = null,
             tint = Color.White,
             modifier = Modifier
+                .clickable { onClick() }
                 .clip(CircleShape)
                 .background(Color(0xFF6C63FF))
                 .padding(10.dp)
-                .clickable { onClick() }
         )
     }
 }
