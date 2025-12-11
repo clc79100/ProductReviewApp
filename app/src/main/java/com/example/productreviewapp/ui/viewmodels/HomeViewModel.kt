@@ -17,8 +17,6 @@ class HomeViewModel: ViewModel(){
     var reviewsByReviewer by mutableStateOf<List<Review>>(emptyList())
     var loading by mutableStateOf(false)
 
-
-
     init {
         loadReviews()
     }
@@ -33,7 +31,7 @@ class HomeViewModel: ViewModel(){
                 val resultByCategory = service.getAllReviewsByCategory("IEM")
                 reviewsByCategory = resultByCategory
 
-                val resultByReviewer = service.getAllReviewsByReviewer("Reviewer 2")
+                val resultByReviewer = service.getAllReviewsByReviewer("Suprapixel")
                 reviewsByReviewer = resultByReviewer
             }
             catch (e: Exception){

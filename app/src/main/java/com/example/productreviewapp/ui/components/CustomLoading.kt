@@ -10,8 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.productreviewapp.ui.theme.MainPurple
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -22,6 +22,8 @@ fun CustomLoading(){
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ){
-        LoadingIndicator(modifier = Modifier.size(120.dp))
+        LoadingIndicator(
+            color = MainPurple,
+            modifier = Modifier.size(120.dp))
     }
 }

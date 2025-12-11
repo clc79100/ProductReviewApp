@@ -22,3 +22,5 @@ val RedGradient = listOf(
     Color(0xFFff5332),
     Color(0xFFff194a)
 )
+
+val MainPurple = Color(0xFF6C63FF)

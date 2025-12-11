@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.productreviewapp.ui.theme.BlueGradient
 
 @Composable
-fun CustomButton(modifier: Modifier, onClick: () -> Unit){
+fun CustomButton(text: String,modifier: Modifier, onClick: () -> Unit){
     Box(
         modifier,
         contentAlignment = Alignment.Center
@@ -41,7 +41,7 @@ fun CustomButton(modifier: Modifier, onClick: () -> Unit){
             contentAlignment = Alignment.Center
         ){
             Text(
-                text = "Iniciar Sesión",
+                text = text,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White)

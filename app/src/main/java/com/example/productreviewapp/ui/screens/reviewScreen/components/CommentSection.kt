@@ -17,9 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ChatBubbleOutline
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -35,6 +34,7 @@ import coil3.compose.AsyncImage
 import com.example.productreviewapp.domain.dtos.CommentDTO
 import com.example.productreviewapp.domain.models.User
 import com.example.productreviewapp.domain.utils.SharedPref
+import com.example.productreviewapp.ui.theme.MainPurple
 import com.example.productreviewapp.ui.viewmodels.ReviewViewModel
 
 @Composable
@@ -64,7 +64,7 @@ fun CommentSection (vm: ReviewViewModel){
             Icon(
                 imageVector = Icons.Default.ChatBubbleOutline,
                 contentDescription = "Comentar",
-                tint = Color.Gray,
+                tint = MainPurple,
                 modifier = Modifier
                     .padding(end = 8.dp)
             )
@@ -85,7 +85,7 @@ fun CommentSection (vm: ReviewViewModel){
                         modifier = Modifier
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                             .fillMaxWidth()
-                            .shadow(elevation = 8.dp, shape = RoundedCornerShape(24.dp))
+                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(24.dp))
                             .clip(RoundedCornerShape(24.dp))
                             .background(Color.White)
                             .padding(all = 16.dp)
@@ -103,14 +103,13 @@ fun CommentSection (vm: ReviewViewModel){
                                     modifier = Modifier
                                         .size(30.dp)
                                         .border(
-                                            color = Color(0xFF6C63FF),
+                                            color = MainPurple,
                                             width = 2.dp,
                                             shape = CircleShape
                                         )
                                         .padding(4.dp),
                                     contentAlignment = Alignment.BottomEnd
                                 ) {
-
                                     Icon(
                                         imageVector = Icons.Default.AccountCircle,
                                         contentDescription = null,
@@ -159,8 +158,9 @@ fun CommentSection (vm: ReviewViewModel){
                                     }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Default.Edit,
-                                        contentDescription = null
+                                        imageVector = Icons.Outlined.Edit,
+                                        contentDescription = null,
+                                        tint = MainPurple
                                     )
                                 }
                                 IconButton(
@@ -171,8 +171,9 @@ fun CommentSection (vm: ReviewViewModel){
                                     }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = null
+                                        imageVector = Icons.Outlined.Delete,
+                                        contentDescription = null,
+                                        tint = MainPurple
                                     )
                                 }
                             }

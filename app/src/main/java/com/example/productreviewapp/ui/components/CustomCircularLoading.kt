@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.productreviewapp.ui.theme.MainPurple
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -23,6 +24,8 @@ fun CustomCircularLoading(){
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ){
-        CircularWavyProgressIndicator(modifier = Modifier.size(60.dp))
+        CircularWavyProgressIndicator(
+            color = MainPurple,
+            modifier = Modifier.size(60.dp))
     }
 }

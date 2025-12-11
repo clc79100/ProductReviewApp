@@ -49,7 +49,7 @@ fun HomeScreen(
 
             item {
                 RowReviews(
-                    "Hechas por Reviewer 2",
+                    "Hechas por Suprapixel",
                     vm.reviewsByReviewer,
                     navController
                 )

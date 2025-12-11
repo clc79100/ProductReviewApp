@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.productreviewapp.ui.theme.MainPurple
 
 @Composable
 fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
@@ -27,7 +28,7 @@ fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
         modifier = Modifier
             .size(160.dp)
             .border(
-                color = Color(0xFF6C63FF),
+                color = MainPurple,
                 width = 3.dp,
                 shape = CircleShape
             )
@@ -57,9 +58,9 @@ fun PhotoProfile(profilePhoto: String?, onClick: () -> Unit){
             contentDescription = null,
             tint = Color.White,
             modifier = Modifier
-                .clickable { onClick() }
                 .clip(CircleShape)
-                .background(Color(0xFF6C63FF))
+                .clickable { onClick() }
+                .background(MainPurple)
                 .padding(10.dp)
         )
     }

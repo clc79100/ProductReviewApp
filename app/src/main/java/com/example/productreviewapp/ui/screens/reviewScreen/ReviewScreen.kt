@@ -1,15 +1,12 @@
 package com.example.productreviewapp.ui.screens.reviewScreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,9 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -165,8 +160,12 @@ fun ReviewScreen(
                 text = "Comentarios",
                 fontWeight = FontWeight.SemiBold
             )
+            val text = recentComment?.let {
+                "${it.user?.name}: ${it.content}"
+            } ?: "No hay comentarios"
+
             Text(
-                text = (recentComment?.user?.name + ": " + recentComment?.content) ?:" No Hay comentarios",
+                text = text,
                 color = Color.Gray,
                 minLines = 2,
                 maxLines = 2,

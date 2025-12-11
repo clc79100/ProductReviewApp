@@ -2,11 +2,11 @@ package com.example.productreviewapp.ui.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -14,8 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -30,11 +28,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.productreviewapp.ui.components.CustomLoading
 import com.example.productreviewapp.ui.screens.auth.components.AuthHeader
+import com.example.productreviewapp.ui.screens.auth.components.CustomButton
 import com.example.productreviewapp.ui.theme.BlueGradient
 import com.example.productreviewapp.ui.viewmodels.AuthViewModel
 
@@ -101,39 +99,19 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = PasswordVisualTransformation()
                 )
-
-                OutlinedTextField(
-                    value = vm.confirmPassword,
-                    onValueChange = { vm.confirmPassword = it },
-                    label = { Text("Confirmar Contraseña") },
-                    shape = CircleShape,
-                    modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = PasswordVisualTransformation()
-                )
             }
-
-            // BOTÓN (igual que Login)
-            Button(
-                enabled = vm.isEnabled,
-                onClick = {
+            Box(
+                Modifier.weight(0.5f),
+                contentAlignment = Alignment.Center
+            ){
+                CustomButton("Crear Cuenta",Modifier){
                     vm.register()
                     focusManager.clearFocus()
                     vm.showAlertDialog = true
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0059FF)
-                ),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "Registrarse",
-                    fontSize = 16.sp,
-                    color = Color.White
-                )
+                }
             }
+
+
         }
     }
 
@@ -144,8 +122,8 @@ fun RegisterScreen(
     if (vm.showAlertDialog){
         AlertDialog(
             onDismissRequest = {},
-            title = { Text("ya te registraste xd") },
-            text = { Text("inicia sesion pibe 😹") },
+            title = { Text("¡Te has Regisrtado!") },
+            text = { Text("Inicia Sesión") },
             icon = {
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
