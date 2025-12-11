@@ -37,24 +37,6 @@ fun RowReviews(
                     navController.navigate(ReviewScreenRoute(review.id))
                 }
             )
-            //Spacer(modifier = Modifier.width(14.dp))
         }
     }
-    /*Row(
-        modifier = Modifier
-            .horizontalScroll(rememberScrollState())
-            .padding(start = 20.dp, bottom = 12.dp)
-    ) {
-        reviews.forEach { review ->
-            ReviewCardHorizontal(
-                title = review.title,
-                imageUrl = review.product.image,
-                price = review.product.price,
-                onClick = {
-                    navController.navigate(ReviewScreenRoute(review.id))
-                }
-            )
-            Spacer(modifier = Modifier.width(14.dp))
-        }
-    }*/
 }

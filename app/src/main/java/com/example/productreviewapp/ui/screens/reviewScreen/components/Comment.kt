@@ -49,7 +49,6 @@ fun Comment(
             .background(Color.White)
             .padding(all = 16.dp)
     ){
-        //Text(comment.content)
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -137,7 +136,6 @@ fun Comment(
                 }
             }
         }
-        //Text(text = comment.createdAt.month.toString())
         Text(comment.content)
 
     }

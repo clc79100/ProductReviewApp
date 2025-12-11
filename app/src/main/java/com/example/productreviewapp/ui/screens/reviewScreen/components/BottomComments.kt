@@ -32,9 +32,6 @@ fun BottomComments(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            /*.clickable {
-                vm.showSheet = true
-            }*/
             .padding(all = 16.dp)
     ) {
         val recentComment =

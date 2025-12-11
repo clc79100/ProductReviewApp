@@ -78,7 +78,6 @@ fun ProductCard(
             AsyncImage(
                 model = product?.image,
                 contentDescription = product?.name,
-                //contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .weight(1f)
             )

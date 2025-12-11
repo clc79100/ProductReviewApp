@@ -21,7 +21,6 @@ fun Search() {
             .padding(horizontal = 20.dp)
             .fillMaxWidth()
     ) {
-
         TextField(
             value = "",
             onValueChange = {},

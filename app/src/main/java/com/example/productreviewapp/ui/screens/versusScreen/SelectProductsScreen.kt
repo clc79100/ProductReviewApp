@@ -146,9 +146,7 @@ fun SelectProductScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(vm.products) { product ->
-                        SelectProductCard(product) {
-
-                        }
+                        SelectProductCard(product) {}
                     }
                 }
                 if (vm.loading){

@@ -56,7 +56,6 @@ fun SelectProductCard(product: Product,onClick: () -> Unit){
             AsyncImage(
                 model = product.image,
                 contentDescription = product.name,
-                //contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(150.dp)
             )
